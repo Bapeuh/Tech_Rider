@@ -89,8 +89,19 @@ Configuration de référence :
 - écran, clavier et souris pour l'exploitation et la maintenance ;
 - accès Internet pour les services nécessitant une validation en ligne.
 
-> [!TODO]
-> Configuration minimale et recommandée du serveur à confirmer selon la build livrée.
+Configuration minimale validée :
+
+| Composant | Spécification minimale |
+|---|---|
+| Processeur | Intel Core i7-3770 à 3,40 GHz |
+| Mémoire vive | 32 Go de RAM |
+| Stockage système | SSD 250 Go (233 Go utiles sur le poste de référence) |
+| Stockage complémentaire | HDD 1 To (932 Go utiles sur le poste de référence) |
+| Carte graphique | NVIDIA GeForce GTX 970, 4 Go |
+| Architecture système | Système d'exploitation 64 bits, processeur x64 |
+
+> [!NOTE]
+> Le poste de référence utilisé pour valider cette configuration porte le nom `BKL01`. Les identifiants Windows propres à cette machine ne sont pas nécessaires pour reproduire l'installation.
 
 ### Réseau
 
@@ -166,7 +177,96 @@ L'installation comprend au minimum :
 > [!TODO]
 > Temps d'installation, de calibration et de démontage à confirmer selon le site et le matériel livré.
 
-## 8. Exploitation
+## 8. Installation logicielle et première configuration
+
+Trois installations logicielles sont nécessaires :
+
+1. l'expérience et son serveur sur l'ordinateur Windows ;
+2. l'APK de l'expérience sur chaque casque ;
+3. l'APK de contrôle sur la tablette Android.
+
+### 8.1 Installation sur l'ordinateur serveur
+
+1. Installer la version PC fournie de **Lady Liberty**.
+2. Créer deux raccourcis vers l'exécutable de l'expérience.
+3. Ajouter les arguments suivants dans le champ **Cible** de chaque raccourci, après le chemin de l'exécutable.
+
+Raccourci du serveur temporaire **NoName** :
+
+```text
+-server -team=gm
+```
+
+Raccourci du serveur de la salle **ROOM01** :
+
+```text
+-server -team=gm -sessionname=ROOM01
+```
+
+> [!IMPORTANT]
+> Le raccourci sans `-sessionname` ouvre le serveur **NoName**. Il sert à détecter et à configurer les casques avant de les affecter à la salle `ROOM01`.
+
+### 8.2 Première connexion au serveur
+
+Lors du premier lancement de l'expérience sur l'ordinateur :
+
+1. saisir les identifiants fournis, avec l'adresse e-mail et le mot de passe ;
+2. vérifier que les identifiants sont correctement enregistrés ;
+3. fermer l'application si nécessaire ;
+4. lancer le serveur **NoName** ;
+5. lancer ensuite le serveur **ROOM01**.
+
+> [!WARNING]
+> Ne pas fermer le serveur NoName avant d'avoir affecté tous les casques à la session ROOM01.
+
+### 8.3 Installation et configuration des casques
+
+1. Installer l'APK fourni sur chaque casque.
+2. Lancer l'application dans le casque.
+3. Au premier lancement, le casque se connecte automatiquement au serveur **NoName**.
+4. Dans l'interface du serveur, cliquer sur le numéro du casque détecté.
+5. Modifier les paramètres nécessaires :
+   - numéro du casque ;
+   - couleur du joueur ;
+   - serveur / session de destination, ici `ROOM01`.
+6. Fermer la fenêtre de réglage pour appliquer les modifications.
+
+Si la session a été modifiée, l'application s'arrête dans le casque. À son prochain lancement, elle doit se connecter automatiquement à la session sélectionnée.
+
+Une fois tous les casques affectés à `ROOM01` et leur connexion vérifiée, le serveur **NoName** peut être fermé.
+
+### 8.4 Mode kiosque des casques
+
+Configurer chaque casque en **mode kiosque** et définir Lady Liberty comme application à lancer automatiquement.
+
+> [!IMPORTANT]
+> Le mode kiosque permet à l'application de redémarrer automatiquement lorsqu'elle se ferme. C'est notamment le cas après un changement de session ou de langue : l'application se ferme, puis se relance avec le nouveau réglage.
+
+### 8.5 Installation et connexion de la tablette Android
+
+1. Installer l'APK de contrôle fourni sur la tablette Android.
+2. Vérifier que la tablette est connectée au même réseau local que le serveur.
+3. Lancer l'application.
+4. Sélectionner, en haut de l'écran, la salle à administrer dans la liste des salles disponibles.
+5. Choisir `ROOM01`.
+6. Appuyer sur **Connecter**.
+
+La tablette peut ensuite accéder aux fonctions de contrôle disponibles pour cette salle.
+
+### 8.6 Contrôle final
+
+- [ ] Les identifiants sont enregistrés sur le serveur
+- [ ] Les raccourcis NoName et ROOM01 fonctionnent
+- [ ] Le serveur ROOM01 apparaît sur le réseau
+- [ ] L'APK est installé sur tous les casques
+- [ ] Chaque casque possède le bon numéro et la bonne couleur
+- [ ] Tous les casques se connectent à ROOM01
+- [ ] Le mode kiosque relance correctement l'application
+- [ ] L'APK de contrôle est installé sur la tablette
+- [ ] La tablette voit ROOM01 et s'y connecte
+- [ ] Le serveur NoName est fermé après la configuration
+
+## 9. Exploitation
 
 Avant chaque ouverture :
 
@@ -187,7 +287,7 @@ Entre deux groupes :
 > [!TODO]
 > Nombre minimal d'opérateurs et cadence exacte des sessions à confirmer selon le parcours visiteurs et l'organisation du lieu.
 
-## 9. Consignes de sécurité
+## 10. Consignes de sécurité
 
 Les visiteurs doivent être informés que :
 
@@ -200,7 +300,7 @@ Les visiteurs doivent être informés que :
 
 Les opérateurs doivent surveiller la salle pendant toute la session et pouvoir interrompre l'expérience si nécessaire.
 
-## 10. Maintenance
+## 11. Maintenance
 
 Contrôles quotidiens :
 
@@ -219,17 +319,24 @@ Prévoir au minimum :
 - batteries ou casques de remplacement selon la cadence ;
 - matériel de nettoyage compatible avec les casques.
 
-## 11. Logistique
+## 12. Logistique
 
 > [!TODO]
 > À confirmer : nombre de flight cases, dimensions, poids, contenu exact du parc, conditions de stockage et besoins de manutention pour une salle.
 
-## 12. Paramètres logiciels
+## 13. Paramètres logiciels
+
+Arguments de lancement actuellement documentés :
+
+```text
+-server -team=gm
+-server -team=gm -sessionname=ROOM01
+```
 
 > [!TODO]
-> À compléter avec les exécutables, arguments de lancement, paramètres serveur, procédure de démarrage, procédure d'arrêt et outils de supervision propres à la build livrée.
+> À compléter avec le nom exact de l'exécutable, la procédure d'arrêt complète et les outils de supervision propres à la build livrée.
 
-## 13. Checklist installation
+## 14. Checklist installation
 
 - [ ] Salle de 8 × 6,5 m disponible et dégagée
 - [ ] Hauteur et accès validés
@@ -251,8 +358,8 @@ Prévoir au minimum :
 - [ ] Procédure d'arrêt d'urgence validée
 - [ ] Matériel de nettoyage disponible
 
-## 14. Version du document
+## 15. Version du document
 
 **Configuration :** 1 salle / 1 instance  
-**Version :** 0.1  
+**Version :** 0.2  
 **Dernière mise à jour :** septembre 2026
