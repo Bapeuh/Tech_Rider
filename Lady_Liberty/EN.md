@@ -89,8 +89,19 @@ Reference configuration:
 - monitor, keyboard and mouse for operation and maintenance;
 - Internet access for services requiring online validation.
 
-> [!TODO]
-> Minimum and recommended server specifications must be confirmed for the delivered build.
+Validated minimum configuration:
+
+| Component | Minimum specification |
+|---|---|
+| Processor | Intel Core i7-3770 at 3.40 GHz |
+| Memory | 32 GB RAM |
+| System storage | 250 GB SSD (233 GB usable on the reference computer) |
+| Additional storage | 1 TB HDD (932 GB usable on the reference computer) |
+| Graphics card | NVIDIA GeForce GTX 970, 4 GB |
+| System architecture | 64-bit operating system, x64 processor |
+
+> [!NOTE]
+> The reference computer used to validate this configuration is named `BKL01`. Windows device and product IDs specific to that computer are not required to reproduce the installation.
 
 ### Network
 
@@ -166,7 +177,96 @@ Installation includes at least:
 > [!TODO]
 > Installation, calibration and dismantling times must be confirmed according to the venue and delivered equipment.
 
-## 8. Operation
+## 8. Software installation and initial setup
+
+Three software components must be installed:
+
+1. the experience and server software on the Windows computer;
+2. the experience APK on every headset;
+3. the control APK on the Android tablet.
+
+### 8.1 Server computer installation
+
+1. Install the supplied PC version of **Lady Liberty**.
+2. Create two shortcuts to the experience executable.
+3. Add the following arguments to the **Target** field of each shortcut, after the executable path.
+
+Temporary **NoName** server shortcut:
+
+```text
+-server -team=gm
+```
+
+**ROOM01** server shortcut:
+
+```text
+-server -team=gm -sessionname=ROOM01
+```
+
+> [!IMPORTANT]
+> The shortcut without `-sessionname` opens the **NoName** server. It is used to detect and configure headsets before assigning them to the `ROOM01` room.
+
+### 8.2 Initial server login
+
+When launching the experience on the computer for the first time:
+
+1. enter the supplied credentials, including the email address and password;
+2. check that the credentials have been saved correctly;
+3. close the application if required;
+4. launch the **NoName** server;
+5. then launch the **ROOM01** server.
+
+> [!WARNING]
+> Do not close the NoName server until all headsets have been assigned to the ROOM01 session.
+
+### 8.3 Headset installation and configuration
+
+1. Install the supplied APK on every headset.
+2. Launch the application in the headset.
+3. On its first launch, the headset automatically connects to the **NoName** server.
+4. In the server interface, click the number of the detected headset.
+5. Edit the required settings:
+   - headset number;
+   - player colour;
+   - destination server / session, in this case `ROOM01`.
+6. Close the settings window to apply the changes.
+
+If the session was changed, the application closes in the headset. The next time it launches, it should automatically connect to the selected session.
+
+Once all headsets have been assigned to `ROOM01` and their connections have been checked, the **NoName** server can be closed.
+
+### 8.4 Headset kiosk mode
+
+Configure every headset in **kiosk mode** and set Lady Liberty as the application that launches automatically.
+
+> [!IMPORTANT]
+> Kiosk mode allows the application to restart automatically whenever it closes. This occurs, for example, after changing a headset's session or language: the application closes and then relaunches with the new setting.
+
+### 8.5 Android tablet installation and connection
+
+1. Install the supplied control APK on the Android tablet.
+2. Check that the tablet is connected to the same local network as the server.
+3. Launch the application.
+4. At the top of the screen, select the room to manage from the list of available rooms.
+5. Select `ROOM01`.
+6. Tap **Connect**.
+
+The tablet can then access the control functions available for that room.
+
+### 8.6 Final check
+
+- [ ] Credentials are saved on the server
+- [ ] NoName and ROOM01 shortcuts work
+- [ ] The ROOM01 server is visible on the network
+- [ ] The APK is installed on all headsets
+- [ ] Every headset has the correct number and colour
+- [ ] All headsets connect to ROOM01
+- [ ] Kiosk mode correctly relaunches the application
+- [ ] The control APK is installed on the tablet
+- [ ] The tablet can see and connect to ROOM01
+- [ ] The NoName server is closed after configuration
+
+## 9. Operation
 
 Before opening each day:
 
@@ -187,7 +287,7 @@ Between groups:
 > [!TODO]
 > Minimum staffing and exact session frequency must be confirmed according to the visitor journey and venue organisation.
 
-## 9. Safety instructions
+## 10. Safety instructions
 
 Visitors must be informed that:
 
@@ -200,7 +300,7 @@ Visitors must be informed that:
 
 Operators must supervise the room throughout the session and be able to interrupt the experience when necessary.
 
-## 10. Maintenance
+## 11. Maintenance
 
 Daily checks:
 
@@ -219,17 +319,24 @@ Provide at least:
 - spare batteries or headsets according to the operating frequency;
 - headset-compatible cleaning equipment.
 
-## 11. Logistics
+## 12. Logistics
 
 > [!TODO]
 > To be confirmed: number of flight cases, dimensions, weights, exact equipment package, storage conditions and handling requirements for one room.
 
-## 12. Software parameters
+## 13. Software parameters
+
+Currently documented launch arguments:
+
+```text
+-server -team=gm
+-server -team=gm -sessionname=ROOM01
+```
 
 > [!TODO]
-> Complete with the executables, launch arguments, server settings, start-up procedure, shutdown procedure and monitoring tools specific to the delivered build.
+> Complete with the exact executable name, full shutdown procedure and monitoring tools specific to the delivered build.
 
-## 13. Installation checklist
+## 14. Installation checklist
 
 - [ ] 8 × 6.5 m room available and clear
 - [ ] Height and access approved
@@ -251,8 +358,8 @@ Provide at least:
 - [ ] Emergency shutdown procedure approved
 - [ ] Cleaning equipment available
 
-## 14. Document version
+## 15. Document version
 
 **Configuration:** 1 room / 1 instance  
-**Version:** 0.1  
+**Version:** 0.2  
 **Last update:** September 2026
