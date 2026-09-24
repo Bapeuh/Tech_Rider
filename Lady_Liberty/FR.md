@@ -179,92 +179,275 @@ L'installation comprend au minimum :
 
 ## 8. Installation logicielle et première configuration
 
-Trois installations logicielles sont nécessaires :
+Le dossier de livraison de **Lady Liberty** contient trois sous-dossiers correspondant aux trois composants à installer :
 
-1. l'expérience et son serveur sur l'ordinateur Windows ;
-2. l'APK de l'expérience sur chaque casque ;
-3. l'APK de contrôle sur la tablette Android.
+```text
+Lady_Liberty/
+├── Tablette_Android/
+├── Game_Windows/
+└── Game_Android/
+```
 
-### 8.1 Installation sur l'ordinateur serveur
+| Dossier | Destination | Fonction |
+|---|---|---|
+| `Tablette_Android` | Tablette Android | Interface de contrôle des sessions |
+| `Game_Windows` | Ordinateur serveur | Serveur et interface opérateur |
+| `Game_Android` | Casques VR | Application Lady Liberty destinée aux visiteurs |
 
-1. Installer la version PC fournie de **Lady Liberty**.
-2. Créer deux raccourcis vers l'exécutable de l'expérience.
-3. Ajouter les arguments suivants dans le champ **Cible** de chaque raccourci, après le chemin de l'exécutable.
+> [!IMPORTANT]
+> L’ordinateur serveur, la tablette et tous les casques doivent être connectés au même réseau local et placés sur le même sous-réseau.
 
-Raccourci du serveur temporaire **NoName** :
+### 8.1 Installation du serveur Windows
+
+Le dossier `Game_Windows` contient l’installateur de l’application serveur, notamment :
+
+```text
+Lady Liberty_1.0.0.5_Installer.exe
+Lady Liberty_1.0.0.5_Installer-1.bin
+```
+
+Les deux fichiers doivent rester dans le même dossier pendant l’installation.
+
+#### Procédure d’installation
+
+1. Ouvrir le dossier `Game_Windows`.
+2. Double-cliquer sur `Lady Liberty_1.0.0.5_Installer.exe`.
+3. Suivre les différentes étapes de l’assistant d’installation.
+4. Lorsque l’installateur le demande, renseigner le nom de la session correspondant à la salle.
+
+Exemple :
+
+```text
+Session01
+```
+
+> [!IMPORTANT]
+> Le nom de la session doit être exactement identique sur le serveur et dans le fichier `setup.ini` utilisé pour l’installation des casques. Il est recommandé d’utiliser un nom simple, sans espace ni caractère spécial.
+
+#### Première connexion
+
+Une fois l’installation terminée :
+
+1. lancer l’application Lady Liberty ;
+2. saisir l’adresse e-mail et le mot de passe fournis ;
+3. vérifier que les identifiants sont correctement enregistrés ;
+4. vérifier que le serveur démarre avec le nom de session configuré.
+
+Le raccourci du serveur nommé utilise les arguments suivants :
+
+```text
+-server -team=gm -sessionname=Session01
+```
+
+`Session01` doit être remplacé par le nom choisi lors de l’installation.
+
+### 8.2 Installation de la tablette Android
+
+Le dossier `Tablette_Android` contient l’APK de l’interface de contrôle ainsi que les fichiers nécessaires à son installation.
+
+#### Procédure d’installation
+
+1. installer l’APK fourni sur la tablette Android ;
+2. connecter la tablette au même réseau local que le serveur et les casques ;
+3. lancer l’application de contrôle.
+
+La première fenêtre de l’application affiche les différentes sessions détectées sur le réseau ainsi que leur état.
+
+Pour accéder à une salle :
+
+1. sélectionner la session souhaitée dans la liste ;
+2. appuyer sur **Connecter** ;
+3. attendre l’ouverture de l’interface de gestion de la partie.
+
+L’interface de la tablette présente les mêmes informations principales que l’interface opérateur disponible sur l’ordinateur serveur.
+
+> [!WARNING]
+> Si aucune session n’apparaît, vérifier que la tablette est connectée au bon réseau, que le serveur est lancé et que les équipements se trouvent sur le même sous-réseau.
+
+### 8.3 Installation de l’application sur les casques
+
+Le dossier `Game_Android` contient notamment :
+
+```text
+setup.ini
+LadyLiberty-Android-Shipping-arm64.apk
+Install_LadyLiberty_WithID.bat
+Install_LadyLiberty.bat
+```
+
+Il peut également contenir des fichiers ou dossiers complémentaires nécessaires à l’installation. Ils doivent être conservés dans leur emplacement d’origine.
+
+#### Configuration du nom de session
+
+Avant d’installer l’application sur les casques :
+
+1. ouvrir le fichier `setup.ini` ;
+2. renseigner le nom de la session ;
+3. utiliser exactement le même nom que celui configuré sur le serveur ;
+4. enregistrer le fichier avant de lancer le script d’installation.
+
+Exemple :
+
+```text
+Session01
+```
+
+> [!IMPORTANT]
+> Une différence de nom, de casse ou d’orthographe empêchera le casque de rejoindre automatiquement la bonne session.
+
+### 8.4 Installation avec attribution directe d’un identifiant
+
+Pour installer l’application et attribuer directement un numéro au casque, utiliser :
+
+```text
+Install_LadyLiberty_WithID.bat
+```
+
+Ce script permet d’assigner un identifiant au casque pendant l’installation. Cet identifiant apparaîtra ensuite dans l’interface opérateur sur l’ordinateur et sur la tablette.
+
+Procédure recommandée :
+
+1. connecter un seul casque à l’ordinateur ;
+2. vérifier que le casque est correctement détecté ;
+3. lancer `Install_LadyLiberty_WithID.bat` ;
+4. saisir l’identifiant demandé ;
+5. attendre la confirmation de la fin de l’installation ;
+6. débrancher le casque ;
+7. répéter l’opération avec le casque suivant en utilisant un identifiant différent.
+
+> [!IMPORTANT]
+> Chaque casque d’une même installation doit disposer d’un identifiant unique.
+
+### 8.5 Installation sans attribution directe d’un identifiant
+
+Pour installer l’application sans attribuer immédiatement de numéro au casque, utiliser :
+
+```text
+Install_LadyLiberty.bat
+```
+
+Le numéro du casque pourra ensuite être modifié depuis l’interface opérateur.
+
+Cette méthode peut être utilisée lorsque l’attribution des identifiants est effectuée ultérieurement ou lorsque la configuration finale est réalisée depuis le serveur.
+
+### 8.6 Installation des casques avec un MDM
+
+L’APK peut également être déployé directement sur les casques à l’aide d’un outil MDM.
+
+Dans cette configuration :
+
+- tous les casques reçoivent initialement l’identifiant `72` ;
+- tous les casques sont initialement affectés à la session `NoName` ;
+- les identifiants et les sessions doivent ensuite être configurés manuellement depuis l’interface opérateur.
+
+> [!WARNING]
+> Tant que les casques n’ont pas été reconfigurés, ils peuvent apparaître avec le même identifiant `72`. Il est nécessaire de les traiter individuellement afin de leur attribuer un identifiant unique.
+
+### 8.7 Création d’un serveur temporaire NoName
+
+Pour récupérer et configurer les casques installés par MDM, il faut lancer simultanément :
+
+- le serveur correspondant à la salle, par exemple `Session01` ;
+- un serveur temporaire sans nom de session, appelé `NoName`.
+
+#### Création du raccourci NoName
+
+1. repérer le raccourci de Lady Liberty sur le bureau de l’ordinateur serveur ;
+2. copier ce raccourci ;
+3. renommer la copie, par exemple :
+
+```text
+Lady Liberty — NoName
+```
+
+4. effectuer un clic droit sur ce nouveau raccourci ;
+5. ouvrir **Propriétés** ;
+6. dans le champ **Cible**, retirer complètement l’argument :
+
+```text
+-sessionname=Session01
+```
+
+Le raccourci du serveur NoName doit conserver uniquement les arguments suivants :
 
 ```text
 -server -team=gm
 ```
 
-Raccourci du serveur de la salle **ROOM01** :
+Le raccourci du serveur de la salle doit conserver :
 
 ```text
--server -team=gm -sessionname=ROOM01
+-server -team=gm -sessionname=Session01
 ```
 
-> [!IMPORTANT]
-> Le raccourci sans `-sessionname` ouvre le serveur **NoName**. Il sert à détecter et à configurer les casques avant de les affecter à la salle `ROOM01`.
+### 8.8 Affectation des casques à la bonne session
 
-### 8.2 Première connexion au serveur
+1. lancer le serveur `NoName` ;
+2. lancer le serveur nommé, par exemple `Session01` ;
+3. lancer l’application Lady Liberty sur le casque ;
+4. attendre que le casque apparaisse dans l’interface du serveur NoName ;
+5. cliquer sur l’identifiant du casque ;
+6. dans la fenêtre de configuration, modifier :
+   - l’identifiant du casque ;
+   - la couleur du joueur, si nécessaire ;
+   - la session de destination ;
+7. sélectionner la session correspondant à la salle, par exemple `Session01` ;
+8. fermer la fenêtre de configuration pour enregistrer les modifications.
 
-Lors du premier lancement de l'expérience sur l'ordinateur :
+Lorsque les paramètres sont modifiés, l’application Lady Liberty se ferme automatiquement dans le casque.
 
-1. saisir les identifiants fournis, avec l'adresse e-mail et le mot de passe ;
-2. vérifier que les identifiants sont correctement enregistrés ;
-3. fermer l'application si nécessaire ;
-4. lancer le serveur **NoName** ;
-5. lancer ensuite le serveur **ROOM01**.
+Il faut ensuite relancer l’application pour charger les nouveaux paramètres. Le casque doit alors se connecter automatiquement à la session sélectionnée.
 
-> [!WARNING]
-> Ne pas fermer le serveur NoName avant d'avoir affecté tous les casques à la session ROOM01.
+Répéter cette opération pour chaque casque.
 
-### 8.3 Installation et configuration des casques
+Lorsque tous les casques :
 
-1. Installer l'APK fourni sur chaque casque.
-2. Lancer l'application dans le casque.
-3. Au premier lancement, le casque se connecte automatiquement au serveur **NoName**.
-4. Dans l'interface du serveur, cliquer sur le numéro du casque détecté.
-5. Modifier les paramètres nécessaires :
-   - numéro du casque ;
-   - couleur du joueur ;
-   - serveur / session de destination, ici `ROOM01`.
-6. Fermer la fenêtre de réglage pour appliquer les modifications.
+- possèdent un identifiant unique ;
+- sont affectés à la bonne session ;
+- apparaissent correctement sur le serveur nommé ;
 
-Si la session a été modifiée, l'application s'arrête dans le casque. À son prochain lancement, elle doit se connecter automatiquement à la session sélectionnée.
-
-Une fois tous les casques affectés à `ROOM01` et leur connexion vérifiée, le serveur **NoName** peut être fermé.
-
-### 8.4 Mode kiosque des casques
-
-Configurer chaque casque en **mode kiosque** et définir Lady Liberty comme application à lancer automatiquement.
+le serveur `NoName` peut être fermé.
 
 > [!IMPORTANT]
-> Le mode kiosque permet à l'application de redémarrer automatiquement lorsqu'elle se ferme. C'est notamment le cas après un changement de session ou de langue : l'application se ferme, puis se relance avec le nouveau réglage.
+> Ne pas fermer le serveur NoName avant d’avoir configuré et vérifié tous les casques.
 
-### 8.5 Installation et connexion de la tablette Android
+### 8.9 Configuration du mode kiosque
 
-1. Installer l'APK de contrôle fourni sur la tablette Android.
-2. Vérifier que la tablette est connectée au même réseau local que le serveur.
-3. Lancer l'application.
-4. Sélectionner, en haut de l'écran, la salle à administrer dans la liste des salles disponibles.
-5. Choisir `ROOM01`.
-6. Appuyer sur **Connecter**.
+L’utilisation du mode kiosque est fortement recommandée sur tous les casques.
 
-La tablette peut ensuite accéder aux fonctions de contrôle disponibles pour cette salle.
+Lady Liberty doit être définie comme application autorisée et comme application à lancer automatiquement.
 
-### 8.6 Contrôle final
+Le mode kiosque permet à l’application de redémarrer automatiquement lorsqu’elle se ferme, notamment après :
 
-- [ ] Les identifiants sont enregistrés sur le serveur
-- [ ] Les raccourcis NoName et ROOM01 fonctionnent
-- [ ] Le serveur ROOM01 apparaît sur le réseau
-- [ ] L'APK est installé sur tous les casques
-- [ ] Chaque casque possède le bon numéro et la bonne couleur
-- [ ] Tous les casques se connectent à ROOM01
-- [ ] Le mode kiosque relance correctement l'application
-- [ ] L'APK de contrôle est installé sur la tablette
-- [ ] La tablette voit ROOM01 et s'y connecte
-- [ ] Le serveur NoName est fermé après la configuration
+- un changement d’identifiant ;
+- un changement de session ;
+- un changement de langue ;
+- un arrêt involontaire de l’application.
+
+Lorsqu’un paramètre est modifié, l’application se ferme puis se relance automatiquement avec la nouvelle configuration.
+
+> [!NOTE]
+> Sans mode kiosque, l’opérateur devra relancer manuellement Lady Liberty dans le casque après chaque modification nécessitant le redémarrage de l’application.
+
+### 8.10 Vérification finale de l’installation
+
+Avant de valider l’installation, vérifier les points suivants :
+
+- [ ] Le serveur Windows est installé.
+- [ ] L’adresse e-mail et le mot de passe ont été enregistrés.
+- [ ] Le serveur démarre avec le bon nom de session.
+- [ ] La tablette est connectée au même réseau que le serveur et les casques.
+- [ ] L’application de contrôle est installée sur la tablette.
+- [ ] La tablette détecte la session configurée.
+- [ ] L’application Lady Liberty est installée sur chaque casque.
+- [ ] Le fichier `setup.ini` contient le bon nom de session.
+- [ ] Chaque casque possède un identifiant unique.
+- [ ] Chaque casque est affecté à la bonne session.
+- [ ] Tous les casques apparaissent dans l’interface opérateur.
+- [ ] Tous les casques apparaissent dans l’application tablette.
+- [ ] Le mode kiosque relance correctement Lady Liberty.
+- [ ] Le serveur NoName est fermé après la configuration.
+- [ ] Une session complète a été testée avec tous les casques.
 
 ## 9. Exploitation
 
@@ -330,7 +513,7 @@ Arguments de lancement actuellement documentés :
 
 ```text
 -server -team=gm
--server -team=gm -sessionname=ROOM01
+-server -team=gm -sessionname=Session01
 ```
 
 > [!TODO]
@@ -361,5 +544,5 @@ Arguments de lancement actuellement documentés :
 ## 15. Version du document
 
 **Configuration :** 1 salle / 1 instance  
-**Version :** 0.2  
+**Version :** 0.3  
 **Dernière mise à jour :** septembre 2026
