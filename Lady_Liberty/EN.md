@@ -179,92 +179,275 @@ Installation includes at least:
 
 ## 8. Software installation and initial setup
 
-Three software components must be installed:
+The **Lady Liberty** delivery folder contains three subfolders corresponding to the three components to be installed:
 
-1. the experience and server software on the Windows computer;
-2. the experience APK on every headset;
-3. the control APK on the Android tablet.
+```text
+Lady_Liberty/
+├── Tablette_Android/
+├── Game_Windows/
+└── Game_Android/
+```
 
-### 8.1 Server computer installation
+| Folder | Destination | Function |
+|---|---|---|
+| `Tablette_Android` | Android tablet | Session control interface |
+| `Game_Windows` | Server computer | Server and operator interface |
+| `Game_Android` | VR headsets | Lady Liberty visitor application |
 
-1. Install the supplied PC version of **Lady Liberty**.
-2. Create two shortcuts to the experience executable.
-3. Add the following arguments to the **Target** field of each shortcut, after the executable path.
+> [!IMPORTANT]
+> The server computer, tablet and all headsets must be connected to the same local network and placed on the same subnet.
 
-Temporary **NoName** server shortcut:
+### 8.1 Windows server installation
+
+The `Game_Windows` folder contains the server application installer, including:
+
+```text
+Lady Liberty_1.0.0.5_Installer.exe
+Lady Liberty_1.0.0.5_Installer-1.bin
+```
+
+Both files must remain in the same folder during installation.
+
+#### Installation procedure
+
+1. Open the `Game_Windows` folder.
+2. Double-click `Lady Liberty_1.0.0.5_Installer.exe`.
+3. Follow the steps in the installation wizard.
+4. When prompted, enter the session name assigned to the room.
+
+Example:
+
+```text
+Session01
+```
+
+> [!IMPORTANT]
+> The session name must be exactly the same on the server and in the `setup.ini` file used to install the headsets. A simple name without spaces or special characters is recommended.
+
+#### Initial login
+
+Once installation is complete:
+
+1. launch the Lady Liberty application;
+2. enter the supplied email address and password;
+3. check that the credentials have been saved correctly;
+4. check that the server starts with the configured session name.
+
+The named server shortcut uses the following arguments:
+
+```text
+-server -team=gm -sessionname=Session01
+```
+
+Replace `Session01` with the name selected during installation.
+
+### 8.2 Android tablet installation
+
+The `Tablette_Android` folder contains the control interface APK and the files required for its installation.
+
+#### Installation procedure
+
+1. install the supplied APK on the Android tablet;
+2. connect the tablet to the same local network as the server and headsets;
+3. launch the control application.
+
+The first screen displays the sessions detected on the network and their current status.
+
+To access a room:
+
+1. select the required session from the list;
+2. tap **Connect**;
+3. wait for the session management interface to open.
+
+The tablet interface displays the same main information as the operator interface on the server computer.
+
+> [!WARNING]
+> If no session appears, check that the tablet is connected to the correct network, that the server is running and that all devices are on the same subnet.
+
+### 8.3 Installing the application on the headsets
+
+The `Game_Android` folder contains, among other files:
+
+```text
+setup.ini
+LadyLiberty-Android-Shipping-arm64.apk
+Install_LadyLiberty_WithID.bat
+Install_LadyLiberty.bat
+```
+
+It may also contain additional files or folders required for installation. They must remain in their original locations.
+
+#### Configuring the session name
+
+Before installing the application on the headsets:
+
+1. open the `setup.ini` file;
+2. enter the session name;
+3. use exactly the same name as the one configured on the server;
+4. save the file before running the installation script.
+
+Example:
+
+```text
+Session01
+```
+
+> [!IMPORTANT]
+> Any difference in the name, letter case or spelling will prevent the headset from automatically joining the correct session.
+
+### 8.4 Installation with direct ID assignment
+
+To install the application and directly assign a number to the headset, use:
+
+```text
+Install_LadyLiberty_WithID.bat
+```
+
+This script assigns an ID to the headset during installation. The ID will then appear in the operator interface on both the computer and tablet.
+
+Recommended procedure:
+
+1. connect only one headset to the computer;
+2. check that the headset is correctly detected;
+3. run `Install_LadyLiberty_WithID.bat`;
+4. enter the requested ID;
+5. wait for confirmation that installation is complete;
+6. disconnect the headset;
+7. repeat the operation with the next headset, using a different ID.
+
+> [!IMPORTANT]
+> Every headset in the same installation must have a unique ID.
+
+### 8.5 Installation without direct ID assignment
+
+To install the application without immediately assigning a number to the headset, use:
+
+```text
+Install_LadyLiberty.bat
+```
+
+The headset number can then be changed from the operator interface.
+
+This method may be used when IDs will be assigned later or when the final configuration is performed from the server.
+
+### 8.6 Installing headsets through an MDM
+
+The APK may also be deployed directly to the headsets using an MDM platform.
+
+With this method:
+
+- all headsets initially receive ID `72`;
+- all headsets are initially assigned to the `NoName` session;
+- their IDs and sessions must then be configured manually from the operator interface.
+
+> [!WARNING]
+> Until they have been reconfigured, multiple headsets may appear with the same ID `72`. They must be handled individually and assigned unique IDs.
+
+### 8.7 Creating a temporary NoName server
+
+To detect and configure headsets installed through an MDM, run both of the following at the same time:
+
+- the server assigned to the room, for example `Session01`;
+- a temporary server without a session name, referred to as `NoName`.
+
+#### Creating the NoName shortcut
+
+1. locate the Lady Liberty shortcut on the server computer desktop;
+2. copy the shortcut;
+3. rename the copy, for example:
+
+```text
+Lady Liberty — NoName
+```
+
+4. right-click the new shortcut;
+5. open **Properties**;
+6. in the **Target** field, completely remove the following argument:
+
+```text
+-sessionname=Session01
+```
+
+The NoName server shortcut must retain only the following arguments:
 
 ```text
 -server -team=gm
 ```
 
-**ROOM01** server shortcut:
+The room server shortcut must retain:
 
 ```text
--server -team=gm -sessionname=ROOM01
+-server -team=gm -sessionname=Session01
 ```
 
-> [!IMPORTANT]
-> The shortcut without `-sessionname` opens the **NoName** server. It is used to detect and configure headsets before assigning them to the `ROOM01` room.
+### 8.8 Assigning headsets to the correct session
 
-### 8.2 Initial server login
+1. launch the `NoName` server;
+2. launch the named server, for example `Session01`;
+3. launch the Lady Liberty application on the headset;
+4. wait for the headset to appear in the NoName server interface;
+5. click the headset ID;
+6. in the configuration window, edit:
+   - the headset ID;
+   - the player colour, if required;
+   - the destination session;
+7. select the session assigned to the room, for example `Session01`;
+8. close the configuration window to save the changes.
 
-When launching the experience on the computer for the first time:
+When the settings are changed, the Lady Liberty application closes automatically on the headset.
 
-1. enter the supplied credentials, including the email address and password;
-2. check that the credentials have been saved correctly;
-3. close the application if required;
-4. launch the **NoName** server;
-5. then launch the **ROOM01** server.
+Relaunch the application to load the new settings. The headset should then automatically connect to the selected session.
 
-> [!WARNING]
-> Do not close the NoName server until all headsets have been assigned to the ROOM01 session.
+Repeat this procedure for every headset.
 
-### 8.3 Headset installation and configuration
+Once all headsets:
 
-1. Install the supplied APK on every headset.
-2. Launch the application in the headset.
-3. On its first launch, the headset automatically connects to the **NoName** server.
-4. In the server interface, click the number of the detected headset.
-5. Edit the required settings:
-   - headset number;
-   - player colour;
-   - destination server / session, in this case `ROOM01`.
-6. Close the settings window to apply the changes.
+- have a unique ID;
+- are assigned to the correct session;
+- appear correctly on the named server;
 
-If the session was changed, the application closes in the headset. The next time it launches, it should automatically connect to the selected session.
-
-Once all headsets have been assigned to `ROOM01` and their connections have been checked, the **NoName** server can be closed.
-
-### 8.4 Headset kiosk mode
-
-Configure every headset in **kiosk mode** and set Lady Liberty as the application that launches automatically.
+the `NoName` server can be closed.
 
 > [!IMPORTANT]
-> Kiosk mode allows the application to restart automatically whenever it closes. This occurs, for example, after changing a headset's session or language: the application closes and then relaunches with the new setting.
+> Do not close the NoName server until all headsets have been configured and checked.
 
-### 8.5 Android tablet installation and connection
+### 8.9 Configuring kiosk mode
 
-1. Install the supplied control APK on the Android tablet.
-2. Check that the tablet is connected to the same local network as the server.
-3. Launch the application.
-4. At the top of the screen, select the room to manage from the list of available rooms.
-5. Select `ROOM01`.
-6. Tap **Connect**.
+Kiosk mode is strongly recommended on every headset.
 
-The tablet can then access the control functions available for that room.
+Lady Liberty must be configured as an allowed application and as the application that launches automatically.
 
-### 8.6 Final check
+Kiosk mode allows the application to restart automatically whenever it closes, including after:
 
-- [ ] Credentials are saved on the server
-- [ ] NoName and ROOM01 shortcuts work
-- [ ] The ROOM01 server is visible on the network
-- [ ] The APK is installed on all headsets
-- [ ] Every headset has the correct number and colour
-- [ ] All headsets connect to ROOM01
-- [ ] Kiosk mode correctly relaunches the application
-- [ ] The control APK is installed on the tablet
-- [ ] The tablet can see and connect to ROOM01
-- [ ] The NoName server is closed after configuration
+- an ID change;
+- a session change;
+- a language change;
+- an unexpected application shutdown.
+
+When a setting is changed, the application closes and then automatically restarts with the new configuration.
+
+> [!NOTE]
+> Without kiosk mode, the operator must manually relaunch Lady Liberty on the headset after each change that requires the application to restart.
+
+### 8.10 Final installation check
+
+Before approving the installation, check the following:
+
+- [ ] The Windows server is installed.
+- [ ] The email address and password have been saved.
+- [ ] The server starts with the correct session name.
+- [ ] The tablet is connected to the same network as the server and headsets.
+- [ ] The control application is installed on the tablet.
+- [ ] The tablet detects the configured session.
+- [ ] The Lady Liberty application is installed on every headset.
+- [ ] The `setup.ini` file contains the correct session name.
+- [ ] Every headset has a unique ID.
+- [ ] Every headset is assigned to the correct session.
+- [ ] All headsets appear in the operator interface.
+- [ ] All headsets appear in the tablet application.
+- [ ] Kiosk mode correctly relaunches Lady Liberty.
+- [ ] The NoName server is closed after configuration.
+- [ ] A complete session has been tested with all headsets.
 
 ## 9. Operation
 
@@ -330,7 +513,7 @@ Currently documented launch arguments:
 
 ```text
 -server -team=gm
--server -team=gm -sessionname=ROOM01
+-server -team=gm -sessionname=Session01
 ```
 
 > [!TODO]
@@ -361,5 +544,5 @@ Currently documented launch arguments:
 ## 15. Document version
 
 **Configuration:** 1 room / 1 instance  
-**Version:** 0.2  
+**Version:** 0.3  
 **Last update:** September 2026
