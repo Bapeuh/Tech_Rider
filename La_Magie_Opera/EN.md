@@ -98,6 +98,32 @@ Indicative timing :
 
 Each headset must be calibrated inside the real play space. Tracking must be tested across the entire play area.
 
+### Suspended equipment and lighting
+
+The following equipment is suspended above the play area, which is marked on the floor by a rectangle made of **8 linoleum strips, each 80 cm wide**.
+
+> [!TODO]
+> The final width and arrangement of the linoleum strips must be confirmed.
+
+#### Wi-Fi routers
+
+- **4 routers**, mounted on **2 separate trusses**, with 2 routers per truss
+- spacing between the two routers on each truss: **3.5 m**
+- distance between the two trusses: **2.5 to 3 m**
+- rigging height: **approximately 5 m above floor level**
+
+#### Lighting
+
+- **4 × 1 kW horizon floodlights**, mounted on **2 trusses separate from the router trusses**, with 2 floodlights per truss
+- spacing between the two floodlights on each truss: **3 m**
+- distance between the two trusses: **2.5 to 3 m**
+- rigging height: **approximately 5.5 to 6 m above floor level**
+- intensity: **75%**
+- used **without diffusers**
+
+> [!IMPORTANT]
+> The trusses, routers and lighting fixtures must be rigged or approved by qualified personnel, in accordance with venue safety regulations and load capacities.
+
 ## 8. Operation
 
 Recommended configuration :
@@ -159,6 +185,10 @@ Player example :
 
 - [ ] 8 × 8 m play area cleared
 - [ ] Lighting validated
+- [ ] 4 routers mounted on 2 trusses according to the rigging plan
+- [ ] 4 × 1 kW horizon floodlights mounted on 2 dedicated trusses
+- [ ] Heights, spacing, 75% intensity and absence of diffusers checked
+- [ ] Rigging and suspended loads approved by the venue
 - [ ] Computers installed
 - [ ] Ethernet network operational
 - [ ] Dedicated Wi-Fi configured
@@ -172,5 +202,5 @@ Player example :
 
 ## 14. Document version
 
-**Version:** 0.1  
+**Version:** 0.2  
 **Last update:** September 2026
