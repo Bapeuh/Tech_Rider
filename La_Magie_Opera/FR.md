@@ -98,6 +98,32 @@ Temps indicatif :
 
 Chaque casque doit être calibré dans l'espace réel. Le tracking doit être testé sur l'ensemble de la surface de jeu.
 
+### Éléments suspendus et éclairage
+
+Les éléments suivants sont suspendus au-dessus de la zone de jeu, matérialisée au sol par un rectangle composé de **8 laies de lino de 80 cm de largeur**.
+
+> [!TODO]
+> La largeur et la disposition définitives des laies de lino sont à confirmer.
+
+#### Routeurs Wi-Fi
+
+- **4 routeurs**, installés sur **2 perches** distinctes, à raison de 2 routeurs par perche
+- espacement entre les deux routeurs d'une même perche : **3,5 m**
+- distance entre les deux perches : **2,5 à 3 m**
+- hauteur d'accroche : **environ 5 m du sol**
+
+#### Éclairage
+
+- **4 horizïodes de 1 kW**, installés sur **2 perches** différentes de celles supportant les routeurs, à raison de 2 horizïodes par perche
+- espacement entre les deux horizïodes d'une même perche : **3 m**
+- distance entre les deux perches : **2,5 à 3 m**
+- hauteur d'accroche : **environ 5,5 à 6 m du sol**
+- intensité : **75 %**
+- utilisation **sans diffuseur**
+
+> [!IMPORTANT]
+> L'accroche des perches, routeurs et projecteurs doit être réalisée ou validée par un personnel qualifié, conformément aux règles de sécurité et aux capacités de charge du lieu.
+
 ## 8. Exploitation
 
 Configuration recommandée :
@@ -159,6 +185,10 @@ Exemple joueur :
 
 - [ ] Zone de jeu 8 × 8 m libre
 - [ ] Éclairage validé
+- [ ] 4 routeurs installés sur 2 perches selon le plan d'accroche
+- [ ] 4 horizïodes de 1 kW installés sur 2 perches dédiées
+- [ ] Hauteurs, espacements, intensité à 75 % et absence de diffuseur vérifiés
+- [ ] Accroches et charges suspendues validées par le lieu
 - [ ] Ordinateurs installés
 - [ ] Réseau Ethernet fonctionnel
 - [ ] Wi-Fi dédié configuré
@@ -172,5 +202,5 @@ Exemple joueur :
 
 ## 14. Version du document
 
-**Version :** 0.1  
+**Version :** 0.2  
 **Dernière mise à jour :** septembre 2026
